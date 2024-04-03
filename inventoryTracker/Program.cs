@@ -213,11 +213,15 @@ internal class Program
         if (index != -1)
         {
 
-            Console.WriteLine($"The make of your car is: {vehicle_Make[index]}, ");
+            Console.WriteLine($"Make: {vehicle_Make[index]}");
+            Console.WriteLine($"Model: {vehicle_Year[index]}");
+            Console.WriteLine($"Year: {vehicle_Year[index]}");
+            Console.WriteLine($"Price: {price[index]}");
+            Console.WriteLine($"Category: {Category[index]}");
         }
         else
         {
-            Console.WriteLine("Patient not found!");
+            Console.WriteLine("Vehicle not found!");
         }
     }
 
