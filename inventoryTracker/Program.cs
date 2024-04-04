@@ -2,7 +2,7 @@
 
 internal class Program
 {
-    static int Invetory = 20, stock = 0;
+    static int Invetory = 20, stock = 20;
     static int[] vehicle_IDs = new int[Invetory];
     static string[] vehicle_Make = new string[Invetory];
     static string[] vehicle_Model = new string[Invetory];
@@ -258,7 +258,6 @@ internal class Program
 
     static void GenerateReports()
     {
-        // Please replace the categories D:
         char[] CategorySymbol = {'S', 'P', 'C', 'V', 'L'};
         string[] CorrespondingCategory = { "Sedan", "Sport", "Convertible", "Van", "Luxury" };
 
