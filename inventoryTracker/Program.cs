@@ -259,8 +259,8 @@ internal class Program
     static void GenerateReports()
     {
         // Please replace the categories D:
-        char[] CategorySymbol = { 'A', 'B', 'C', 'D', 'E' };
-        string[] CorrespondingCategory = { "SUV", "Sports car", "Sedan", "Station wagon", "Hatchback" };
+        char[] CategorySymbol = {'S', 'P', 'C', 'V', 'L'};
+        string[] CorrespondingCategory = { "Sedan", "Sport", "Convertible", "Van", "Luxury" };
 
         Console.WriteLine("------------------[ STOCK REPORT ]------------------");
         Console.WriteLine($"Current stock = {stock}\n");
