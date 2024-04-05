@@ -14,7 +14,7 @@ internal class Program
 
     static void Main(string[] args)
     {
-
+        Console.Title = "RedLine Dealership";
 
         int option;
         bool exit = true, isInteger = false;
@@ -23,7 +23,7 @@ internal class Program
         do
         {
             Console.WriteLine("\n\nPlease enter the number of the option deseared");
-            Console.WriteLine(" 1. Add vehicle\n 2. Update vehicle\n 3. Delete vehicle\n 4. Search Vehicles by ID\n 5. Search vehicle by category\n 6. Generate reports \n 0. Exit\n");
+            Console.WriteLine(" 1. Add vehicle\n 2. Update vehicle\n 3. Delete vehicle\n 4. Search Vehicles by ID\n 5. Search vehicle by category\n 6. Generate reports \n 7. Settings \n 0. Exit\n");
             option = Convert.ToInt32(Console.ReadLine());
             if (isInteger = validationInt(option))            //Here should be a validation that the input entered is an integer
             {
@@ -37,7 +37,7 @@ internal class Program
 
                     case 2:
 
-                        EditVehicle();
+                        Vehicle_update();
                         break;
 
 
@@ -84,7 +84,9 @@ internal class Program
                             SearchVehicleCategory(searchChar);
                             break;
                         }
-                    
+                    case 7:
+                            Settings();
+                            break;
                     default:
                         Console.WriteLine("The option entered does not exist, please check the available options and select one.\n");
 
@@ -101,110 +103,83 @@ internal class Program
     }
 
 
-    static void addIVehicle()
-    {
-        bool moreItem = false, isInteger = false, isdouble = false, isChar = true, charEntered = true, moreItemEntered = true;
-        string moreItemAnswer;
-        int year;
-        double mountPrice;
-        char category;
-
-        if (stock < Invetory)
+static void addIVehicle()
         {
-            do
+            bool moreItem = false, isdouble = false, isChar = true, charEntered = true, moreItemEntered = true;
+            string moreItemAnswer;
+            char category;
+
+
+
+
+            if (stock < Invetory)
             {
-                Console.WriteLine("To add a new item into the steck you need the follow data\n - Maker\n - Model\n - Manufacture year\n - Price\n - Category\n\n");
-                Console.WriteLine("Please enter the vehicle maker name");
-                vehicle_Make[stock] = Console.ReadLine();
-                Console.WriteLine("Please enter the vehicle model");
-                vehicle_Model[stock] = Console.ReadLine();
                 do
                 {
-                    Console.WriteLine("Please enter the vehicle manufacture year");
-                    year = Convert.ToInt32(Console.ReadLine());
-                    if (isInteger = validationInt(year))            //Here should be a validation that the input entered is an integer
-                    {
-                        vehicle_Year[stock] = year;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Data entered is wrong. The manufacture year must be a number");
-                    }
-                } while (!isInteger);
-                do
-                {
-                    Console.WriteLine("Please enter the vehicle price");
-                    mountPrice = Convert.ToDouble(Console.ReadLine());
-                    if (isdouble = validationDouble(mountPrice))            //Here should be a validation that the input entered is a double
-                    {
-                        price[stock] = mountPrice;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Data entered is wrong. The price must be a number");
-                    }
-                } while (!isdouble);
-                do
-                {
-                    Console.WriteLine("Please enter in uppercase the letter of the vehicle category\n - (S) sedan\n - (P) Sport\n - (C) Convertible\n - (V) Van\n - (L) Luxury");
-                    category = Convert.ToChar(Console.ReadLine());
-                    if (isChar = !validationChar(category))            //Here should be a validation that the input entered is a char
-                    {
-                        if ((category == 'S') || (category == 'P') || (category == 'C') || (category == 'V') || (category == 'L'))
-                        {
-                            Category[stock] = category;
-                            charEntered = false;
+                    Console.WriteLine("To add a new item into the steck you need the follow data\n - Maker\n - Model\n - Manufacture year\n - Price\n - Category\n\n");
+                    Console.WriteLine("Please enter the vehicle maker name");
+                    vehicle_Make[stock] = Console.ReadLine();
+                    Console.WriteLine("Please enter the vehicle model");
+                    vehicle_Model[stock] = Console.ReadLine();
 
-                        }
-                        else
-                        {
-                            Console.WriteLine("Error");
-                        }
-                    }
-                    else
-                    {
-                        Console.WriteLine("Data entered is wrong. The price must be a letter");
-                    }
-                } while ((isChar && charEntered));
+                    string Q_year = "Please enter the vehicle manufacture year";
+                    int year = Var_verify(1, Q_year);
+                    vehicle_Year[stock] = year;
 
-                int id;
-                do
-                {
-                    id = random.Next(1, 999); // Generate a 3-digit random ID
+                    string Q_price = "Please enter the vehicle price";
+                    double mountPrice = Var_verify(2, Q_price);
+                    price[stock] = mountPrice;
 
-                } while (Array.IndexOf(vehicle_IDs, id, 0, stock) != -1); // Ensure ID is unique
-                vehicle_IDs[stock] = id;
 
-                Console.WriteLine("The vehicle was added in the store with the ID {0}. The data of vehicle are: \n - ID: {0}\n - Maker: {1}\n - Model: {2}\n - Manufactured year: {3}\n - Price: {4}\n - Category: {5}", vehicle_IDs[stock], vehicle_Make[stock], vehicle_Model[stock], vehicle_Year[stock], price[stock], Category[stock]);
-                stock += 1;
 
-                if (stock < Invetory)
-                {
+                    string Q_Cat = "Please enter in uppercase the letter of the vehicle category\n - (S) sedan\n - (P) Sport\n - (C) Convertible\n - (V) Van\n - (L) Luxury";
+                    do
+                     {
+                        category = Var_verify(3, Q_Cat);
+                    } while (category == 'S' && category != 'P' && category != 'C' && category != 'V' && category != 'L');
+                    
+                    Category[stock] = category;
+
+                    
+
+                    int id;
                     do
                     {
-                        Console.WriteLine("Do you want to add another item? Yes/No");
-                        moreItemAnswer = Console.ReadLine();
-                        if ((moreItemAnswer.ToUpper() == "YES") || (moreItemAnswer.ToUpper() == "NO"))
+                        id = random.Next(1, 999); // Generate a 3-digit random ID
+
+                    } while (Array.IndexOf(vehicle_IDs, id, 0, stock) != -1); // Ensure ID is unique
+                    vehicle_IDs[stock] = id;
+
+                    Console.WriteLine("The vehicle was added in the store with the ID {0}. The data of vehicle are: \n - ID: {0}\n - Maker: {1}\n - Model: {2}\n - Manufactured year: {3}\n - Price: {4}\n - Category: {5}", vehicle_IDs[stock], vehicle_Make[stock], vehicle_Model[stock], vehicle_Year[stock], price[stock], Category[stock]);
+                    stock += 1;
+
+                    if (stock < Invetory)
+                    {
+                        do
                         {
-                            if (moreItemAnswer.ToUpper() == "YES")
+                            Console.WriteLine("Do you want to add another item? Yes/No");
+                            moreItemAnswer = Console.ReadLine();
+                            if ((moreItemAnswer.ToUpper() == "YES") || (moreItemAnswer.ToUpper() == "NO"))
                             {
-                                moreItem = true;
+                                if (moreItemAnswer.ToUpper() == "YES")
+                                {
+                                    moreItem = true;
+                                }
+                                else
+                                {
+                                    moreItem = false;
+                                }
+                                moreItemEntered = false;
                             }
-                            else
-                            {
-                                moreItem = false;
-                            }
-                            moreItemEntered = false;
-                        }
-                    } while (moreItemEntered);
-                }
-            } while (moreItem);
+                        } while (moreItemEntered);
+                    }
+                } while (moreItem);
+            }
+            else
+            {
+                Console.WriteLine("It is not possible to add more vehicles because the store is full");
+            }
         }
-        else
-        {
-            Console.WriteLine("It is not possible to add more vehicles because the store is full");
-        }
-    }
 
 
     static void SearchVehicleId(int id)
@@ -245,10 +220,242 @@ internal class Program
         }
     }
 
-    static void EditVehicle()
-    {
 
-    }
+    static int Give_Index()
+        {
+            int index = 0;
+            bool Main_valid = true;
+            bool valid = true;
+            do
+            {
+                Console.WriteLine("Please choose method to choose vehicle!");
+                Console.WriteLine("1) ID");
+                Console.WriteLine("2) Make");
+                string Choose = Console.ReadLine();
+
+
+
+
+                if (Choose == "1")
+                {
+                    Main_valid = false;
+                    while (valid)
+                    {
+                        Console.Clear();
+                        string Q_ID = "Please enter the ID of the vehicle!!    | type 0 to exit";
+                        int User_ID = Var_verify(1, Q_ID);
+
+                        if (User_ID == 0)
+                        {
+                            index = -2;
+                            break;
+                        }
+
+
+                        index = Array.IndexOf(vehicle_IDs, User_ID);
+
+
+                        if (index != -1)
+                            valid = false;
+                        else
+                        {
+                            Console.WriteLine("Please retry!");
+                            Console.WriteLine("Press any key to contunie");
+                            Console.ReadKey();
+                            Console.Clear();
+                        }
+                    }
+                }
+                else if (Choose == "2")
+                {
+                    Main_valid = false;
+                    while (valid)
+                    {
+                        int[] Make_Temp = new int[vehicle_Make.Length];
+
+
+
+                        int y2 = 0;
+                        do
+                        {
+                            Console.Clear();
+                            Console.WriteLine("Please enter the make of the vehicle:    | to exit program type 0");
+                            string user_makee = Console.ReadLine().ToLower();
+
+                            if (user_makee == "0")
+                            {
+                                valid = false;
+                                return index = -2;
+
+                            }
+
+
+                            for (int i = 0; i < vehicle_Make.Length; i++)
+                            {
+                                if (vehicle_Make[i] != null)
+                                {
+                                    if (vehicle_Make[i].ToLower() == user_makee)
+                                    {
+                                        Make_Temp[y2] = i;
+                                        y2++;
+
+                                    }
+                                }
+
+                            }
+                        } while (y2 == 0);
+
+
+
+                        bool valid2 = true;
+                        while (valid2)
+                        {
+
+                            Console.Clear();
+                            Console.WriteLine("Car Search list");
+                            for (int i = 0; i < y2; i++)
+                            {
+                                int temp = Make_Temp[i];
+                                Console.WriteLine($"{i + 1}. {vehicle_Make[temp]} {vehicle_Model[temp]} {vehicle_Year[temp]}");
+                            }
+
+                            Console.WriteLine("Please choose an option:");
+                            int choose = Convert.ToInt16(Console.ReadLine());
+
+                            if (choose == 0)
+                            {
+                                break;
+                                index = -2;
+                            }
+                            else if (choose > 0 && choose <= y2)
+                            {
+                                index = Make_Temp[choose - 1];
+                                valid2 = false;
+                                valid = false;
+                            }
+
+
+
+
+                        }
+
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("\n\nPlease retry entery!");
+
+                    Console.WriteLine("Press any key to continue!");
+                    Console.ReadKey();
+                    Console.Clear();
+                }
+                    
+
+                
+            } while (Main_valid);
+            
+            return index;
+        }
+
+    
+    static public void Vehicle_update()
+        {
+            int index = 0;
+            bool valid = true;
+
+
+            Console.Clear();
+            index = Give_Index();
+
+            if (index == -2)
+                valid=false;
+
+            while (valid)
+            {
+
+                
+                Console.Clear();
+
+
+                Console.WriteLine($"What would you like to update for the\nTitle:    {vehicle_Make[index]} {vehicle_Model[index]} {vehicle_Year[index]} \nprice:    {price[index]:C}\nCategory: {Category[index]}");
+                Console.WriteLine("\n1) Vehicle Make");
+                Console.WriteLine("2) Vehicle model");
+                Console.WriteLine("3) Vehicle Year");
+                Console.WriteLine("4) Vehicle Price");
+                Console.WriteLine("5) Vehicle Category");
+                Console.WriteLine("0) Exit");
+
+                string input = Console.ReadLine();
+
+                switch (input)
+                {
+                    case "1":
+                        Console.WriteLine("\n\nWhat would you like to change the make to: ");
+                        string make = Console.ReadLine();
+
+                        Console.WriteLine($"\nOld Make name: {vehicle_Make[index]}");
+                        vehicle_Make[index] = make;
+                        Console.WriteLine($"New Make name: {vehicle_Make[index]}");
+
+
+                        
+                        break;
+                    case "2":
+                        Console.WriteLine("What would you like to change model to: ");
+                        string model = Console.ReadLine();
+
+                        Console.WriteLine($"\nOld Make name: {vehicle_Make[index]}");
+                        vehicle_Model[index] = model;
+                        Console.WriteLine($"New Make name: {vehicle_Model[index]}");
+                        
+                        break;
+                    case "3":
+                        string Q_year = "What would you like to change Year to: ";
+                        int year = Var_verify(1, Q_year);
+
+                        Console.WriteLine($"\nOld Make name: {vehicle_Year[index]}");
+                        vehicle_Year[index] = year;
+                        Console.WriteLine($"New Make name: {vehicle_Year[index]}");
+                        
+                        break;
+                    case "4":
+                        string Q_price = "What would you like to change price to: ";
+                        double Price = Var_verify(2, Q_price);
+
+                        Console.WriteLine($"\nOld Make name: {price[index]}");
+                        price[index] = Price;
+                        Console.WriteLine($"New Make name: {price[index]}");
+                        
+                        break;
+                    case "5":
+                        char cat;
+                        string Q_char = "What would you like to change model to: ";
+                        do
+                        {
+                            cat = Var_verify(3, Q_char);
+                        } while (cat == 'S' && cat != 'P' && cat != 'C' && cat != 'V' && cat != 'L');
+                        
+                        Console.WriteLine($"\nOld Make name: {Category[index]}");
+                        Category[index] = cat;
+                        Console.WriteLine($"New Make name: {Category[index]}");
+                        
+                        break;
+                    case "0":
+                        valid = false;
+                        break;
+                    default:
+                        Console.WriteLine("Please retry!");
+                        Console.ReadLine();
+                        Console.Clear();
+                        break;
+                }
+            }
+
+            Console.WriteLine("\n\nPress any key to continue!");
+            Console.ReadKey();
+            Console.Clear();
+
+        }
 
     static void DeleteVehicle()
     {
@@ -279,19 +486,129 @@ internal class Program
     }
 
 
-    static bool validationInt(int intNumb)
-    {
-        return true;
-    }
+    public static void Settings()
+        {
+            Console.Clear();
+            Console.WriteLine("1. Change Color");
+            string setting_input = Console.ReadLine();
 
-    static bool validationDouble(double doubNumb)
-    {
-        return true;
-    }
-    static bool validationChar(char letter)
-    {
-        return false;
-    }
+            switch (setting_input) {
+
+                case "1":
+                    bool valid = true;
+
+                    while (valid)
+                    {
+                        Console.Clear();
+                        Console.WriteLine("Select a color for the text:");
+                        Console.WriteLine("1. Blue");
+                        Console.WriteLine("2. Green");
+                        Console.WriteLine("3. Red");
+                        Console.WriteLine("4. Yellow");
+                        Console.WriteLine("5. Cyan");
+                        Console.WriteLine("6. Magenta");
+                        Console.WriteLine("7. White");
+                        Console.WriteLine("0. Exit");
+
+                        Console.Write("Enter your choice (0-7): ");
+                        string choice = Console.ReadLine();
+
+
+                        switch (choice) {
+
+                            case "1":
+                                Console.ForegroundColor = ConsoleColor.Blue;
+                                break;
+                            case "2":
+                                Console.ForegroundColor = ConsoleColor.Green;
+                                break;
+                            case "3":
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                break;
+                            case "4":
+                                Console.ForegroundColor = ConsoleColor.Yellow;
+                                break;
+                            case "5":
+                                Console.ForegroundColor = ConsoleColor.Cyan;
+                                break;
+                            case "6":
+                                Console.ForegroundColor = ConsoleColor.Magenta;
+                                break;
+                            case "7":
+                                Console.ForegroundColor= ConsoleColor.White;
+                                break;
+                            case "0":
+                                valid = false;
+                                break;
+                        }
+                    }
+
+                    break;
+
+            }
+
+            Console.WriteLine("\n\nPress any key to continue");
+            Console.ReadKey();
+            Console.Clear();
+        }
+
+
+    public static dynamic Var_verify(int type, string question)
+        {
+            bool isValid = false;
+            switch (type)
+            {
+                case 1:
+
+                    
+                    int Int_output = 0;
+
+                    while (!isValid)
+                    {
+                        Console.WriteLine(question);
+                        string user_input = Console.ReadLine();
+                        
+                        isValid = int.TryParse(user_input, out Int_output);
+                        
+                    }
+                    
+                    Console.Clear();
+                    return Int_output;
+
+                    break;
+
+                case 2:
+                    double Double_output = 0;
+
+                    while (!isValid)
+                    {
+                        Console.WriteLine(question);
+                        string user_input = Console.ReadLine();
+                        isValid = double.TryParse(user_input, out Double_output);
+                    }
+
+                    Console.Clear();
+                    return Double_output;
+
+                    break;
+
+                case 3:
+                    char Char_output = 'a';
+
+                    while (!isValid)
+                    {
+                        Console.WriteLine(question);
+                        string user_input = Console.ReadLine();
+                        isValid = char.TryParse(user_input, out Char_output) && user_input.Length == 1;
+                    }
+                    return Char_output;
+
+                    break;
+                default:
+                    return 0;
+                    break;
+            }
+        }
 
 }
 
