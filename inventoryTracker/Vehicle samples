@@ -1,0 +1,81 @@
+// add Vehicle_test(); to begining of main method
+
+
+static public void Vehicle_test()
+        { int x = 0;
+
+            vehicle_Make[x] = "Lexus";
+            vehicle_Model[x] = "LFA";
+            vehicle_Year[x] = 2017;
+            price[x] = 95000;
+            Category[x] = 'P';
+            Test_ID();
+
+            x++;
+            vehicle_Make[x] = "Toyta";
+            vehicle_Model[x] = "Camery";
+            vehicle_Year[x] = 2014;
+            price[x] = 12500;
+            Category[x] = 'S';
+            Test_ID();
+
+
+            x++;
+            vehicle_Make[x] = "Mazda";
+            vehicle_Model[x] = "MX5";
+            vehicle_Year[x] = 1994;
+            price[x] = 72000;
+            Category[x] = 'C';
+            Test_ID();
+
+
+            x++;
+            vehicle_Make[x] = "BMW";
+            vehicle_Model[x] = "M4 Comp";
+            vehicle_Year[x] = 2023;
+            price[x] = 93000;
+            Category[x] = 'L';
+            Test_ID();
+
+            x++;
+            vehicle_Make[x] = "Dodge";
+            vehicle_Model[x] = "Helcat Redeye";
+            vehicle_Year[x] = 2021;
+            price[x] = 80000;
+            Category[x] = 'P';
+            Test_ID();
+
+            x++;
+            vehicle_Make[x] = "Pagani";
+            vehicle_Model[x] = "Hyaria";
+            vehicle_Year[x] = 2020;
+            price[x] = 1450000;
+            Category[x] = 'L';
+            Test_ID();
+
+
+            x++;
+            vehicle_Make[x] = "Toyta";
+            vehicle_Model[x] = "Matrix";
+            vehicle_Year[x] = 2008;
+            price[x] = 5900;
+            Category[x] = 'V';
+            Test_ID();
+
+        }
+
+
+
+        static public void Test_ID()
+        {
+            int id;
+            do
+            {
+                id = random.Next(1, 999); // Generate a 3-digit random ID
+
+            } while (Array.IndexOf(vehicle_IDs, id, 0, stock) != -1); // Ensure ID is unique
+            vehicle_IDs[stock] = id;
+            stock+= 1;
+            
+            
+        }
